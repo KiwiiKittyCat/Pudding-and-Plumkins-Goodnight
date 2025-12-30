@@ -3,164 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Good Night Kittens Generator 🌙</title>
-    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <title>Good Night Dream Generator 🌙</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-gradient: linear-gradient(135deg, #2b1055 0%, #7597de 100%);
+            --bg-gradient: linear-gradient(135deg, #1e1e2e 0%, #2d2b55 50%, #4a4e69 100%);
             --card-bg: rgba(255, 255, 255, 0.95);
-            --accent-purple: #6c5ce7;
-            --accent-pink: #fd79a8;
-            --text-dark: #2d3436;
-            --gold: #ffeaa7;
+            --accent-purple: #9d8ec9;
+            --accent-yellow: #f9e79f;
+            --accent-pink: #f5b7b1;
+            --text-color: #4a4a4a;
         }
 
         body {
             font-family: 'Mali', cursive;
             background: var(--bg-gradient);
-            color: var(--text-dark);
+            color: var(--text-color);
             min-height: 100vh;
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            background-attachment: fixed;
-        }
-
-        /* Starry Background Effect */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            /* Starry background effect */
             background-image: 
-                radial-gradient(white 1px, transparent 1px),
-                radial-gradient(white 2px, transparent 2px);
-            background-size: 50px 50px, 100px 100px;
-            background-position: 0 0, 25px 25px;
-            opacity: 0.3;
-            z-index: -1;
+                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px),
+                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px),
+                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 3px);
+            background-size: 550px 550px, 350px 350px, 250px 250px; 
+            background-position: 0 0, 40px 60px, 130px 270px;
         }
 
         .container {
-            background: var(--card-bg);
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 30px;
             padding: 30px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            border: 4px solid #fff;
-            max-width: 650px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            max-width: 700px;
             width: 100%;
             text-align: center;
-            position: relative;
+            border: 4px solid #fff;
+            backdrop-filter: blur(10px);
         }
 
         h1 {
-            font-family: 'Quicksand', sans-serif;
-            color: var(--accent-purple);
+            color: #5b4b8a;
             font-size: 2rem;
             margin-bottom: 5px;
-            text-shadow: 2px 2px 0px #dfe6e9;
+            text-shadow: 1px 1px 0 #fff;
         }
 
         p.subtitle {
-            color: #636e72;
+            color: #777;
             font-size: 0.9rem;
             margin-bottom: 25px;
         }
 
-        /* Slot Layout */
-        .slot-container {
-            display: flex;
-            flex-direction: column;
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 15px;
             margin-bottom: 25px;
         }
 
-        .slot-box {
+        .slot-card {
             background: #fff;
             border-radius: 20px;
-            padding: 12px 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border: 2px solid #dfe6e9;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            position: relative;
             transition: 0.3s;
-            box-shadow: 0 4px 0 #dfe6e9;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
-        .slot-box.locked {
-            border-color: var(--accent-pink);
-            background-color: #fff0f6;
-            box-shadow: 0 4px 0 var(--accent-pink);
+        .slot-card.locked {
+            border-color: #f7ca18;
+            background-color: #fffcf0;
+            box-shadow: 0 0 10px rgba(247, 202, 24, 0.3);
         }
 
-        .label-group {
-            text-align: left;
-            flex-grow: 1;
-            padding-right: 10px;
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .label-title {
-            font-size: 0.85rem;
-            color: var(--accent-purple);
+        .label {
             font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .label-value {
-            font-size: 1rem;
-            font-weight: bold;
-            color: var(--text-dark);
-            word-break: break-word;
-        }
-
-        .controls {
+            color: #6c5ce7;
+            font-size: 0.9rem;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 5px;
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         input[type="number"] {
             width: 50px;
-            padding: 8px;
-            border-radius: 12px;
-            border: 2px solid #b2bec3;
+            padding: 5px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
             text-align: center;
-            font-family: 'Quicksand', sans-serif;
+            font-family: 'Mali', cursive;
             font-size: 1rem;
             outline: none;
-            background: #f1f2f6;
         }
 
         input[type="number"]:focus {
-            border-color: var(--accent-purple);
-            background: #fff;
+            border-color: #6c5ce7;
         }
 
         .lock-btn {
             background: none;
             border: none;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             cursor: pointer;
+            opacity: 0.4;
             transition: 0.2s;
-            opacity: 0.6;
         }
 
         .lock-btn:hover { opacity: 1; transform: scale(1.1); }
-        .slot-box.locked .lock-btn { opacity: 1; }
+        .slot-card.locked .lock-btn { opacity: 1; }
 
-        /* Buttons */
+        .display-text {
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.95rem;
+            color: #333;
+            background: #f4f4f8;
+            padding: 10px;
+            border-radius: 12px;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: 700;
+            word-wrap: break-word;
+        }
+
         .btn-group {
             display: flex;
             gap: 10px;
+            justify-content: center;
             margin-bottom: 20px;
-            flex-wrap: wrap;
         }
 
-        button.action-btn {
-            flex: 1;
-            padding: 12px;
+        button.main-btn {
+            padding: 12px 25px;
             border: none;
             border-radius: 50px;
             font-family: 'Mali', cursive;
@@ -168,150 +165,111 @@
             font-weight: bold;
             cursor: pointer;
             transition: 0.2s;
-            box-shadow: 0 5px 0 rgba(0,0,0,0.1);
-            min-width: 140px;
+            box-shadow: 0 4px 0 rgba(0,0,0,0.1);
         }
 
         .random-btn {
-            background-color: var(--accent-purple);
+            background-color: #a29bfe;
             color: white;
         }
-        .random-btn:hover { background-color: #5849be; transform: translateY(-2px); }
+        .random-btn:hover { background-color: #8e84f5; transform: translateY(-2px); }
         .random-btn:active { transform: translateY(2px); box-shadow: none; }
 
-        .gen-btn {
-            background-color: var(--accent-pink);
+        .copy-btn {
+            background-color: #00b894;
             color: white;
         }
-        .gen-btn:hover { background-color: #e84393; transform: translateY(-2px); }
-        .gen-btn:active { transform: translateY(2px); box-shadow: none; }
-
-        /* Result Area */
-        .result-box {
-            background: #dfe6e9;
-            border: 2px dashed #b2bec3;
-            border-radius: 15px;
-            padding: 20px;
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: #2d3436;
-            min-height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 15px;
-            font-family: 'Quicksand', sans-serif;
-            font-weight: 500;
-        }
-
-        .copy-btn {
-            width: 100%;
-            background-color: #ffeaa7;
-            color: #d35400;
-            padding: 12px;
-            border: none;
-            border-radius: 15px;
-            font-family: 'Mali', cursive;
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 5px 0 #fdcb6e;
-        }
-        .copy-btn:hover { background-color: #ffda79; transform: translateY(-2px); }
+        .copy-btn:hover { background-color: #00a383; transform: translateY(-2px); }
         .copy-btn:active { transform: translateY(2px); box-shadow: none; }
 
-        /* Floating Moon Animation */
-        .moon-icon {
-            position: absolute;
-            top: -30px;
-            right: -20px;
-            font-size: 4rem;
-            animation: float 3s ease-in-out infinite;
-            filter: drop-shadow(0 0 10px rgba(255, 234, 167, 0.5));
+        .result-area {
+            background: #fdf2e9;
+            padding: 20px;
+            border-radius: 20px;
+            border: 2px dashed #fab1a0;
+            position: relative;
         }
 
-        @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(5deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
+        #finalSentence {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #d35400;
+            font-weight: bold;
         }
 
-        @media (max-width: 480px) {
-            .slot-box { flex-direction: column; align-items: stretch; gap: 10px; }
-            .controls { justify-content: space-between; }
-            input[type="number"] { width: 100%; }
-            h1 { font-size: 1.5rem; }
+        /* Responsive for mobile */
+        @media (max-width: 600px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
         }
+
     </style>
 </head>
 <body>
 
     <div class="container">
-        <div class="moon-icon">🌙</div>
-        <h1>Good Night Kittens 🐱💤</h1>
-        <p class="subtitle">สุ่มธีมแม่ลูกแมวในโลกแห่งความฝัน</p>
+        <h1>🌙 Good Night Dreams 🧸</h1>
+        <p class="subtitle">Mother & Baby Cat Cozy Generator</p>
 
-        <div class="slot-container">
-            <div class="slot-box" id="box1">
-                <div class="label-group">
-                    <div class="label-title">🌠 1. Dream Theme (1-100)</div>
-                    <div class="label-value" id="txt1">...</div>
+        <div class="grid-container">
+            <div class="slot-card" id="card1">
+                <div class="card-header">
+                    <span class="label">🌌 1. Theme</span>
+                    <div class="input-wrapper">
+                        <input type="number" id="n1" min="1" max="100" placeholder="#" oninput="updateText(1)">
+                        <button class="lock-btn" onclick="toggleLock(1)" id="lock1">🔓</button>
+                    </div>
                 </div>
-                <div class="controls">
-                    <input type="number" id="n1" min="1" max="100" placeholder="#">
-                    <button class="lock-btn" onclick="toggleLock(1)" id="lock1">🔓</button>
-                </div>
+                <div class="display-text" id="txt1">...</div>
             </div>
 
-            <div class="slot-box" id="box2">
-                <div class="label-group">
-                    <div class="label-title">🧸 2. Collab Item (1-100)</div>
-                    <div class="label-value" id="txt2">...</div>
+            <div class="slot-card" id="card2">
+                <div class="card-header">
+                    <span class="label">🧸 2. Collab</span>
+                    <div class="input-wrapper">
+                        <input type="number" id="n2" min="1" max="100" placeholder="#" oninput="updateText(2)">
+                        <button class="lock-btn" onclick="toggleLock(2)" id="lock2">🔓</button>
+                    </div>
                 </div>
-                <div class="controls">
-                    <input type="number" id="n2" min="1" max="100" placeholder="#">
-                    <button class="lock-btn" onclick="toggleLock(2)" id="lock2">🔓</button>
-                </div>
+                <div class="display-text" id="txt2">...</div>
             </div>
 
-            <div class="slot-box" id="box3">
-                <div class="label-group">
-                    <div class="label-title">👚 3. Pajamas (1-100)</div>
-                    <div class="label-value" id="txt3">...</div>
+            <div class="slot-card" id="card3">
+                <div class="card-header">
+                    <span class="label">👚 3. Pajamas</span>
+                    <div class="input-wrapper">
+                        <input type="number" id="n3" min="1" max="100" placeholder="#" oninput="updateText(3)">
+                        <button class="lock-btn" onclick="toggleLock(3)" id="lock3">🔓</button>
+                    </div>
                 </div>
-                <div class="controls">
-                    <input type="number" id="n3" min="1" max="100" placeholder="#">
-                    <button class="lock-btn" onclick="toggleLock(3)" id="lock3">🔓</button>
-                </div>
+                <div class="display-text" id="txt3">...</div>
             </div>
 
-            <div class="slot-box" id="box4">
-                <div class="label-group">
-                    <div class="label-title">🏰 4. Location (1-100)</div>
-                    <div class="label-value" id="txt4">...</div>
+            <div class="slot-card" id="card4">
+                <div class="card-header">
+                    <span class="label">🏰 4. Location</span>
+                    <div class="input-wrapper">
+                        <input type="number" id="n4" min="1" max="100" placeholder="#" oninput="updateText(4)">
+                        <button class="lock-btn" onclick="toggleLock(4)" id="lock4">🔓</button>
+                    </div>
                 </div>
-                <div class="controls">
-                    <input type="number" id="n4" min="1" max="100" placeholder="#">
-                    <button class="lock-btn" onclick="toggleLock(4)" id="lock4">🔓</button>
-                </div>
+                <div class="display-text" id="txt4">...</div>
             </div>
         </div>
 
         <div class="btn-group">
-            <button class="action-btn random-btn" onclick="randomize()">🎲 สุ่มฝันดี (Random)</button>
-            <button class="action-btn gen-btn" onclick="generate()">✨ สร้างประโยค</button>
+            <button class="main-btn random-btn" onclick="randomize()">🎲 สุ่มฝันดี (Random)</button>
+            <button class="main-btn copy-btn" onclick="copyResult()">✨ สร้างประโยค & คัดลอก</button>
         </div>
 
-        <div class="result-box" id="output">
-            (ผลลัพธ์จะปรากฏที่นี่ค่ะ...)
+        <div class="result-area">
+            <div id="finalSentence">กดสุ่มหรือใส่เลขเพื่อเริ่มสร้างฝันหวาน... 💤</div>
         </div>
-
-        <button class="copy-btn" onclick="copyText()">📋 คัดลอก (Copy)</button>
     </div>
 
     <script>
-        // --- Data Sets ---
+        // --- Data Lists ---
         const themes = [
             "Moonlit Marshmallow Cloud Lullaby", "Star-Sprinkle Pillow Parade", "Aurora Blanket Boat Ride", "Crystal Dewdrop Dream Garden", "Bubble Bath in a Teacup Ocean", "Candy Comet Watching Party", "Velvet Night Lantern Festival", "Whispering Windmill Lullabies", "Starlight Bakery Bedtime Shift", "Pajama Pirate Treasure of Dreams",
             "Glowworm Orchestra Concert", "Moon Cheese Picnic", "Rainbow Mist Sleep Spa", "Dandelion Wish Elevator", "Floating Bookstore Bedtime Browsing", "Dream Train in a Snowglobe", "Lullaby Lighthouse Keepers", "Celestial Koi Pond Meditation", "Cotton Candy Mountain Hike", "Firefly Zipline Through Twilight",
@@ -364,20 +322,38 @@
             "Moonlit Tulip Field", "Cozy Rainy Window Café", "Tiny Lighthouse Reading Room", "Bubble Dome Greenhouse", "Starry Mirror Hall", "Dream Post Office", "Warm Cocoa Alley", "Lullaby Chapel Garden", "Glitter Snow Rooftop", "The Softest Cloud Summit"
         ];
 
-        // --- Logic ---
+        // State Management
         let locked = [false, false, false, false];
 
         function toggleLock(index) {
             locked[index - 1] = !locked[index - 1];
             const btn = document.getElementById(`lock${index}`);
-            const box = document.getElementById(`box${index}`);
+            const card = document.getElementById(`card${index}`);
             
             if (locked[index - 1]) {
                 btn.innerText = "🔒";
-                box.classList.add("locked");
+                card.classList.add('locked');
             } else {
                 btn.innerText = "🔓";
-                box.classList.remove("locked");
+                card.classList.remove('locked');
+            }
+        }
+
+        function updateText(index) {
+            const inputVal = document.getElementById(`n${index}`).value;
+            const display = document.getElementById(`txt${index}`);
+            const num = parseInt(inputVal);
+
+            let arr;
+            if (index === 1) arr = themes;
+            else if (index === 2) arr = collabs;
+            else if (index === 3) arr = pajamas;
+            else arr = locations;
+
+            if (num >= 1 && num <= 100) {
+                display.innerText = arr[num - 1];
+            } else {
+                display.innerText = "...";
             }
         }
 
@@ -386,59 +362,37 @@
                 if (!locked[i - 1]) {
                     const randomNum = Math.floor(Math.random() * 100) + 1;
                     document.getElementById(`n${i}`).value = randomNum;
-                    updateLabel(i, randomNum);
+                    updateText(i);
                 }
             }
         }
 
-        function updateLabel(index, num) {
-            let text = "...";
-            if (num >= 1 && num <= 100) {
-                if (index === 1) text = themes[num - 1];
-                if (index === 2) text = collabs[num - 1];
-                if (index === 3) text = pajamas[num - 1];
-                if (index === 4) text = locations[num - 1];
-            }
-            document.getElementById(`txt${index}`).innerText = text;
-        }
+        function copyResult() {
+            const n1 = document.getElementById('n1').value;
+            const n2 = document.getElementById('n2').value;
+            const n3 = document.getElementById('n3').value;
+            const n4 = document.getElementById('n4').value;
 
-        // Listen for manual input changes
-        [1, 2, 3, 4].forEach(i => {
-            document.getElementById(`n${i}`).addEventListener('input', (e) => {
-                updateLabel(i, parseInt(e.target.value));
-            });
-        });
-
-        function generate() {
-            const n1 = parseInt(document.getElementById('n1').value);
-            const n2 = parseInt(document.getElementById('n2').value);
-            const n3 = parseInt(document.getElementById('n3').value);
-            const n4 = parseInt(document.getElementById('n4').value);
-
+            // Check if user inputs are valid
             if (!n1 || !n2 || !n3 || !n4 || [n1,n2,n3,n4].some(n => n < 1 || n > 100)) {
-                alert("กรุณากรอกตัวเลข 1-100 ให้ครบทุกช่องก่อนนะคะ 🌙");
+                alert("กรุณาใส่เลข 1-100 ให้ครบทุกช่องก่อนนะครับ 💤");
                 return;
             }
 
             const theme = themes[n1 - 1];
             const collab = collabs[n2 - 1];
             const pajama = pajamas[n3 - 1];
-            const place = locations[n4 - 1];
+            const location = locations[n4 - 1];
 
-            const txt = `as ${theme} collab ${collab} with ${pajama} in ${place}`;
-            document.getElementById('output').innerText = txt;
-        }
+            const sentence = `as ${theme} collab ${collab} with ${pajama} in ${location}`;
+            
+            document.getElementById('finalSentence').innerText = sentence;
 
-        function copyText() {
-            const text = document.getElementById('output').innerText;
-            if (text.includes("ผลลัพธ์")) {
-                alert("กดสร้างประโยคก่อนน้า ✨");
-                return;
-            }
-            navigator.clipboard.writeText(text).then(() => {
-                alert("คัดลอกเรียบร้อยค่า! 💤");
+            navigator.clipboard.writeText(sentence).then(() => {
+                alert("คัดลอกเรียบร้อย! ขอให้ฝันดีนะครับ 🌙✨");
             });
         }
     </script>
 </body>
 </html>
+ 
