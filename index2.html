@@ -1,269 +1,442 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dreamy Cat Prompt Generator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <title>Good Night Kittens Generator 🌙</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #1a1a2e;
-            --card-color: #16213e;
-            --accent-color: #e94560;
-            --text-color: #fff;
-            --input-bg: #0f3460;
+            --bg-gradient: linear-gradient(135deg, #2b1055 0%, #7597de 100%);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --accent-purple: #6c5ce7;
+            --accent-pink: #fd79a8;
+            --text-dark: #2d3436;
+            --gold: #ffeaa7;
         }
 
         body {
-            font-family: 'Quicksand', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            font-family: 'Mali', cursive;
+            background: var(--bg-gradient);
+            color: var(--text-dark);
             min-height: 100vh;
             margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
+            background-attachment: fixed;
         }
 
-        h1 {
-            color: #ffd700;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-            margin-bottom: 20px;
-            text-align: center;
+        /* Starry Background Effect */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                radial-gradient(white 1px, transparent 1px),
+                radial-gradient(white 2px, transparent 2px);
+            background-size: 50px 50px, 100px 100px;
+            background-position: 0 0, 25px 25px;
+            opacity: 0.3;
+            z-index: -1;
         }
 
         .container {
-            background-color: var(--card-color);
+            background: var(--card-bg);
+            border-radius: 30px;
             padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            max-width: 600px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            border: 4px solid #fff;
+            max-width: 650px;
             width: 100%;
+            text-align: center;
+            position: relative;
         }
 
-        .input-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
+        h1 {
+            font-family: 'Quicksand', sans-serif;
+            color: var(--accent-purple);
+            font-size: 2rem;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 0px #dfe6e9;
         }
 
-        .input-box {
+        p.subtitle {
+            color: #636e72;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+        }
+
+        /* Slot Layout */
+        .slot-container {
             display: flex;
             flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
         }
 
-        label {
-            margin-bottom: 5px;
-            font-size: 0.9rem;
-            color: #a0a0a0;
+        .slot-box {
+            background: #fff;
+            border-radius: 20px;
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 2px solid #dfe6e9;
+            transition: 0.3s;
+            box-shadow: 0 4px 0 #dfe6e9;
         }
 
-        input {
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #533483;
-            background-color: var(--input-bg);
-            color: white;
-            font-size: 1.1rem;
+        .slot-box.locked {
+            border-color: var(--accent-pink);
+            background-color: #fff0f6;
+            box-shadow: 0 4px 0 var(--accent-pink);
+        }
+
+        .label-group {
+            text-align: left;
+            flex-grow: 1;
+            padding-right: 10px;
+        }
+
+        .label-title {
+            font-size: 0.85rem;
+            color: var(--accent-purple);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .label-value {
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--text-dark);
+            word-break: break-word;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        input[type="number"] {
+            width: 50px;
+            padding: 8px;
+            border-radius: 12px;
+            border: 2px solid #b2bec3;
             text-align: center;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1rem;
             outline: none;
+            background: #f1f2f6;
         }
 
-        input:focus {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 8px rgba(233, 69, 96, 0.5);
+        input[type="number"]:focus {
+            border-color: var(--accent-purple);
+            background: #fff;
         }
 
-        button {
-            width: 100%;
-            padding: 15px;
+        .lock-btn {
+            background: none;
             border: none;
-            border-radius: 10px;
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: 0.2s;
+            opacity: 0.6;
+        }
+
+        .lock-btn:hover { opacity: 1; transform: scale(1.1); }
+        .slot-box.locked .lock-btn { opacity: 1; }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        button.action-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Mali', cursive;
             font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
-            transition: 0.3s;
-            margin-top: 10px;
-        }
-
-        .gen-btn {
-            background: linear-gradient(45deg, #e94560, #c0392b);
-            color: white;
-        }
-
-        .gen-btn:hover {
-            transform: scale(1.02);
-            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
-        }
-
-        .result-area {
-            margin-top: 25px;
-            background-color: #0f3460;
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px dashed #533483;
-            min-height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-size: 1.1rem;
-            line-height: 1.5;
-            color: #a8dadc;
-        }
-
-        .copy-btn {
-            background-color: #4cc9f0;
-            color: #000;
-            margin-top: 15px;
-        }
-        
-        .copy-btn:hover {
-            background-color: #48cae4;
+            transition: 0.2s;
+            box-shadow: 0 5px 0 rgba(0,0,0,0.1);
+            min-width: 140px;
         }
 
         .random-btn {
-            background-color: #7209b7;
+            background-color: var(--accent-purple);
             color: white;
+        }
+        .random-btn:hover { background-color: #5849be; transform: translateY(-2px); }
+        .random-btn:active { transform: translateY(2px); box-shadow: none; }
+
+        .gen-btn {
+            background-color: var(--accent-pink);
+            color: white;
+        }
+        .gen-btn:hover { background-color: #e84393; transform: translateY(-2px); }
+        .gen-btn:active { transform: translateY(2px); box-shadow: none; }
+
+        /* Result Area */
+        .result-box {
+            background: #dfe6e9;
+            border: 2px dashed #b2bec3;
+            border-radius: 15px;
+            padding: 20px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #2d3436;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             margin-bottom: 15px;
-            font-size: 0.9rem;
-            padding: 10px;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 500;
+        }
+
+        .copy-btn {
+            width: 100%;
+            background-color: #ffeaa7;
+            color: #d35400;
+            padding: 12px;
+            border: none;
+            border-radius: 15px;
+            font-family: 'Mali', cursive;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 5px 0 #fdcb6e;
+        }
+        .copy-btn:hover { background-color: #ffda79; transform: translateY(-2px); }
+        .copy-btn:active { transform: translateY(2px); box-shadow: none; }
+
+        /* Floating Moon Animation */
+        .moon-icon {
+            position: absolute;
+            top: -30px;
+            right: -20px;
+            font-size: 4rem;
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(255, 234, 167, 0.5));
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
         }
 
         @media (max-width: 480px) {
-            .input-group {
-                grid-template-columns: 1fr;
-            }
+            .slot-box { flex-direction: column; align-items: stretch; gap: 10px; }
+            .controls { justify-content: space-between; }
+            input[type="number"] { width: 100%; }
+            h1 { font-size: 1.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <h1>🐱 Sweet Dreams Builder 🌙</h1>
-
     <div class="container">
-        <button class="random-btn" onclick="randomize()">🎲 สุ่มตัวเลขทั้งหมด (Random)</button>
-        
-        <div class="input-group">
-            <div class="input-box">
-                <label>1. Theme (1-100)</label>
-                <input type="number" id="num1" min="1" max="100" placeholder="e.g. 5">
+        <div class="moon-icon">🌙</div>
+        <h1>Good Night Kittens 🐱💤</h1>
+        <p class="subtitle">สุ่มธีมแม่ลูกแมวในโลกแห่งความฝัน</p>
+
+        <div class="slot-container">
+            <div class="slot-box" id="box1">
+                <div class="label-group">
+                    <div class="label-title">🌠 1. Dream Theme (1-100)</div>
+                    <div class="label-value" id="txt1">...</div>
+                </div>
+                <div class="controls">
+                    <input type="number" id="n1" min="1" max="100" placeholder="#">
+                    <button class="lock-btn" onclick="toggleLock(1)" id="lock1">🔓</button>
+                </div>
             </div>
-            <div class="input-box">
-                <label>2. Collab (1-100)</label>
-                <input type="number" id="num2" min="1" max="100" placeholder="e.g. 12">
+
+            <div class="slot-box" id="box2">
+                <div class="label-group">
+                    <div class="label-title">🧸 2. Collab Item (1-100)</div>
+                    <div class="label-value" id="txt2">...</div>
+                </div>
+                <div class="controls">
+                    <input type="number" id="n2" min="1" max="100" placeholder="#">
+                    <button class="lock-btn" onclick="toggleLock(2)" id="lock2">🔓</button>
+                </div>
             </div>
-            <div class="input-box">
-                <label>3. Pajamas (1-100)</label>
-                <input type="number" id="num3" min="1" max="100" placeholder="e.g. 88">
+
+            <div class="slot-box" id="box3">
+                <div class="label-group">
+                    <div class="label-title">👚 3. Pajamas (1-100)</div>
+                    <div class="label-value" id="txt3">...</div>
+                </div>
+                <div class="controls">
+                    <input type="number" id="n3" min="1" max="100" placeholder="#">
+                    <button class="lock-btn" onclick="toggleLock(3)" id="lock3">🔓</button>
+                </div>
             </div>
-            <div class="input-box">
-                <label>4. Place (1-100)</label>
-                <input type="number" id="num4" min="1" max="100" placeholder="e.g. 3">
+
+            <div class="slot-box" id="box4">
+                <div class="label-group">
+                    <div class="label-title">🏰 4. Location (1-100)</div>
+                    <div class="label-value" id="txt4">...</div>
+                </div>
+                <div class="controls">
+                    <input type="number" id="n4" min="1" max="100" placeholder="#">
+                    <button class="lock-btn" onclick="toggleLock(4)" id="lock4">🔓</button>
+                </div>
             </div>
         </div>
 
-        <button class="gen-btn" onclick="generatePrompt()">✨ สร้าง Prompt (Generate)</button>
-        
-        <div class="result-area" id="result">
-            (ใส่ตัวเลขแล้วกดปุ่มเพื่อดูผลลัพธ์)
+        <div class="btn-group">
+            <button class="action-btn random-btn" onclick="randomize()">🎲 สุ่มฝันดี (Random)</button>
+            <button class="action-btn gen-btn" onclick="generate()">✨ สร้างประโยค</button>
+        </div>
+
+        <div class="result-box" id="output">
+            (ผลลัพธ์จะปรากฏที่นี่ค่ะ...)
         </div>
 
         <button class="copy-btn" onclick="copyText()">📋 คัดลอก (Copy)</button>
     </div>
 
     <script>
-        // Data Arrays
+        // --- Data Sets ---
         const themes = [
-            "Moonlit Night", "Starry Sky", "Dreamland Adventures", "Floating on Clouds", "Sweet Dreaming", "Magical Forest", "Butterfly Kisses", "Sleeping on a Rainbow", "Night of the Fireflies", "Pillow Fort Dreams",
-            "Cozy Winter Wonderland", "Enchanted Garden", "Nighttime in the Fairy Realm", "Midnight Serenade", "Floating Lanterns", "Celestial Whiskers", "Dreams of Spring Flowers", "Under the Willow Tree", "Quiet Beach Evening", "Cosmic Journey",
-            "Pixie Dreaming", "Tea Party at Twilight", "The Sleepy Garden", "Fairy Dust Dreams", "Dreaming in a Meadow", "Cloudy Night Ride", "Lantern Light Dreams", "Peaceful Rainstorm", "Dreaming of Lullabies", "Whimsical Fantasy Forest",
-            "Butterfly Field", "Under the Starry Ocean", "Ocean Breeze Night", "Dreamy Woodland Path", "Celestial Wonders", "Silky Snowfall Night", "The Secret Garden Dream", "Bedtime Stories", "Midnight Owl Watch", "Comforting Hearthside",
-            "Cozy Cottage Sleep", "Dreams in the Pumpkin Patch", "Moonlit Garden Stroll", "Magical Winter Night", "Firefly Trails", "Forest of Dreams", "Starlight Rest", "Pillow Cloud Dreamland", "Dreaming in a Meadow", "Aurora Borealis Night",
-            "Crystal Garden", "Bed of Lavender", "Enchanted Castle Dreams", "Magical Winter Forest", "Lost in Dreamy Blossoms", "Sweet Sleep Over the Ocean", "Floating in Sweet Dreams", "Sleepy Tea Party", "Under the Cherry Blossoms", "Dreaming of Chocolate Clouds",
-            "A Blanket of Stars", "Whimsical Forest Rest", "Floating Through a Dream World", "Cozy Pajama Dreams", "Starry Night Adventures", "Beneath the Bamboo Leaves", "Pink Cloud Dreams", "Dreamy Carousel Ride", "Midnight Petal Dreams", "Moonlit Tea Party",
-            "Fireflies in the Field", "Whispers in the Night", "The Dream Meadow", "Twilight Picnic Dreams", "Cozy Pillow Dreams", "Night Sky Ride", "Sea of Sleep", "The Cozy Reading Corner", "Forest Whisper Dreams", "Dreaming in a Boat",
-            "Slumber by the Sea", "Night of the Lanterns", "Cat's Dreamy Adventure", "Moonlit Lakeside Sleep", "Cloudy Evening Walk", "The Enchanted Pillow", "Dreaming with Unicorns", "The Dreamy Sunset", "Petal Rain", "Moonlit Beach Stroll",
-            "Snuggles in the Forest", "Dreams of the Ocean", "Sweet Dreams by the Fire", "Fairy Tail Sleep", "Starfall Night", "Sleeping Under the Stars", "Magical Dandelion Dream", "The Dream Castle", "Pillow Cloud Kingdom", "Midnight Snowflakes"
+            "Moonlit Marshmallow Cloud Lullaby", "Star-Sprinkle Pillow Parade", "Aurora Blanket Boat Ride", "Crystal Dewdrop Dream Garden", "Bubble Bath in a Teacup Ocean", "Candy Comet Watching Party", "Velvet Night Lantern Festival", "Whispering Windmill Lullabies", "Starlight Bakery Bedtime Shift", "Pajama Pirate Treasure of Dreams",
+            "Glowworm Orchestra Concert", "Moon Cheese Picnic", "Rainbow Mist Sleep Spa", "Dandelion Wish Elevator", "Floating Bookstore Bedtime Browsing", "Dream Train in a Snowglobe", "Lullaby Lighthouse Keepers", "Celestial Koi Pond Meditation", "Cotton Candy Mountain Hike", "Firefly Zipline Through Twilight",
+            "Gentle Dragon Nursery Patrol", "Sleepy Sunflower Ballroom Waltz", "Cloud Sheep Counting Contest", "Stardust Sandcastle Building", "Moonbeam Carousel Ride", "Night Sky Aquarium Tour", "Cozy Meteor Shower Camping", "Secret Pocket-Dimension Blanket Fort", "Hot Cocoa Volcano Adventure", "Midnight Garden of Talking Roses",
+            "Moon River Gondola Serenade", "Tiny Planet Rooftop Stargazing", "Enchanted Music Box Museum", "Dream Post Office Letter Writing", "Star Map Puzzle Night", "Honeyed Moon Harvest", "Glow Crystal Cave Nap", "Lullaby Library Story-Weaving", "Constellation Painting Class", "Sleep Spell Potion Mixing (Cute Version)",
+            "Moonflower Tea Ceremony", "Cloud-Jelly Trampoline Park", "Misty Mirror Maze of Dreams", "Snowflake Pajama Fashion Show", "Moonlit Coral Reef Slumber Swim", "Star Fruit Orchard Night Walk", "Cozy Nebula Hammock Swing", "Lantern Jellyfish Parade", "Dreamy Mountain Cable Car", "Nighttime Balloon Garden Floating",
+            "Pillow Snowball Fight in Soft Fog", "Cinnamon Breeze Bakery Dreams", "Star-Topped Castle Bedtime Tour", "Whispering Seashell Lullaby Shellphone", "Moonbeam Ice Cream Tasting", "Firework Butterfly Catch-and-Release", "Cloud Castle Hide-and-Seek", "Dream Quilt Universe Stitching", "Silent Cinema Under the Stars", "Lullaby Circus of Gentle Lights",
+            "Stardust Soap Bubble Sculpting", "Sleepy Jellybean Rain Walk", "Moonstone Beach Bonfire Stories", "Night Rainbow Waterfall Listening", "Penguin Pajama Parade (Cute)", "Cozy Comet Observatory Shift", "Floating Teapot House Sleepover", "Dream Orchard of Glow Apples", "Candlelight Paper Boat River", "Starry Meadow Blanket Ballet",
+            "Moonbeam Garden Swing Set", "Soft Thunder Lullaby Drums", "Snowy Cookie Village Night Stroll", "Dream Elevator to the Milky Way", "Pillow Planetarium Adventure", "Cloud Sauna & Aroma Steam", "Night Sky Tarot of Sweet Dreams", "Gentle Sea Dragon Ride", "Starry Quilt Time Machine (Cute)", "Moonlit Panda Tea House Visit",
+            "Dream Domino Constellation Game", "Sleepy Aquarium Tunnel Walk", "Tiny Umbrella Rain of Glitter", "Moon Rabbit Delivery Service", "Star Compass Treasure Hunt", "Cozy Cave of Plush Crystals", "Lullaby Choir on Floating Leaves", "Dream Snow Globe City Tour", "Midnight Noodle Shop for Dreams", "Soft Neon Night Market Stroll",
+            "Aurora Ribbon Dance Practice", "Moonlit Kite Flying on Clouds", "Dream Garden Maze Picnic", "Stardust Fountain Wish Toss", "Sleepy Carousel of Constellations", "Night Blossom Hot Spring Soak", "Cloud Berry Jam Making", "Moonlight Origami Workshop", "Dream Theater Shadow Puppets", "Final Star Kiss Goodnight Ritual"
         ];
 
         const collabs = [
-            "Making a Wish with Star Dust", "Baking Dreamy Treats", "Magic Potion Mix", "Dreaming in the Flower Field", "Pillow Fort Building", "Butterfly Watching", "Cloud Sculpting Adventures", "Stargazing Together", "Tea Party in the Sky", "Making Snow Angels",
-            "Forest Naps", "Dreamy Dance under the Moon", "Playing with Fireflies", "Blanket Building Contest", "Magical Garden Adventures", "Creating Dreamcatchers", "Making a Wish on a Star", "Adventure in the Cloud Castle", "Pillow Fight Fun", "Dreamy Bedtime Stories",
-            "Lullaby Singing Session", "Moonlight Fishing Together", "Nighttime Forest Exploration", "Feather Crafting", "Sweet Treats Creation", "Cloud Mapping Adventure", "Baby Cat's First Flight", "Glittery Dream Collecting", "Moon Pie Making", "Starry Night Painting",
-            "Floating Lantern Crafting", "Dreamy Pillow-making", "Making Flower Crowns", "Fairy Tale Creation", "Star Trail Adventure", "Dreaming in a Boat Together", "Magical Cooking Night", "Starlight Bookmark Making", "Wind Chime Crafting", "Crystal Garden Adventures",
-            "Baking Sweet Cloud Cakes", "Moonlit Balloon Ride", "Firefly Lighting a Path", "Magical Garden Exploration", "Tea Brewing for Sweet Dreams", "Creating Dreamy Bracelets", "Feathering a Bed of Dreams", "Dreamy Soundtrack Production", "Floating Paper Boat Journey", "Storybook Night Adventures",
-            "Building a Floating Island", "Dreamy Boat Making", "Making Moon Cookies", "Crystal Tree Decoration", "Stargazing Picnic", "Fantasy Creature Creation", "Magical Forest Reading", "Cloud Watching Adventures", "Dream Potion Brewing", "Sleeping in a Flower Field",
-            "Ice Cream Dreammaking", "Cloud Napping", "Dreaming in a Jellybean Land", "Story Building", "Star Painting on a Canvas", "Making Dream Candles", "Dreaming with Jellyfish", "Magical Bubble Blowing", "Starlight Pillow Crafting", "Beach Napping Together",
-            "Magical Toy Crafting", "Rain Drop Dance", "Firefly Jars", "Floating on Water Together", "Dream Board Making", "Nighttime Stargazing Adventure", "Making Ice Crystal Treats", "Dreamy Movie Night", "Crystal Formation Journey", "Midnight Dessert-making",
-            "Flying Kite on Cloudy Days", "Puddle Jumping Together", "Building a Magical Garden", "Making Dreams with Lights", "Stargazing and Dream Journals", "Dreamy Blanket-making", "Crafting Starry Bracelets", "Baking Blueberry Muffins Together", "Moonlight Baking", "Painting Stars",
-            "Dreamy Dance Moves", "Cloud Swinging Together", "Pillow Party Fun", "Creating Dreamy Decorations", "Star Quilt Making", "Crafting Magical Wands", "Floating Magic in the Air", "Cloud Yoga Sessions", "Secret Garden Building", "Dreamy Candle-making"
+            "Teddy Bears", "Plush Bunnies", "Mini Alpaca Plushies", "Tiny Ducklings", "Baby Penguins", "Hamster Bakers", "Sleepy Sloths", "Red Panda Pals", "Otter Bedtime Crew", "Koala Cuddle Club",
+            "Owl Mail Carriers", "Fireflies", "Glowworms", "Star Sprites", "Moon Rabbits", "Cloud Sheep", "Dream Dolphins", "Koi Fish", "Jellyfish Lanterns", "Bubble Fairies",
+            "Tiny Dragons (Gentle)", "Unicorn Foals", "Pegasus Ponies", "Mermaid Seal Pups", "Honey Bees", "Butterflies", "Ladybugs", "Caterpillar Train", "Dandelion Seeds", "Shooting Stars",
+            "Comets", "Constellation Friends", "Aurora Ribbons", "Snowflakes", "Raindrop Characters", "Music Box Spirits", "Lullaby Birds", "Piano Keys Parade", "Harp Strings", "Wind Chimes",
+            "Paper Lanterns", "Origami Cranes", "Storybooks", "Floating Books", "Magical Ink Pens", "Sticker Sheets", "Washi Tape Rolls", "Glitter Jars", "Snow Globes", "Tiny Teacups",
+            "Macaron Towers", "Marshmallow Clouds", "Cotton Candy", "Gummy Stars", "Honey Toast", "Strawberry Milk", "Hot Cocoa", "Moon Cheese", "Star Fruit", "Blueberry Meteors",
+            "Cozy Blankets", "Quilts", "Pillows", "Pajama Sets", "Sleep Masks", "Dream Catchers", "Night Lamps", "Star Projectors", "Bedtime Story Cards", "Lullaby Playlists",
+            "Tiny Tents", "Mini Campfires (Safe/Cute)", "Bubble Machines", "Ribbon Wands", "Soft Balloons", "Kite Strings", "Toy Trains", "Carousel Horses", "Mini Ferris Wheels", "Paper Boats",
+            "Cloud Boats", "Star Maps", "Telescopes", "Kaleidoscopes", "Prism Crystals", "Moonstones", "Seashells", "Pearl Bracelets", "Flower Crowns", "Lavender Bundles",
+            "Chamomile Tea Cups", "Cinnamon Sticks", "Vanilla Candles", "Scented Soap Bars", "Tiny Bubbles Bath Bombs", "Pastel Ball Pits", "Musical Plushies", "Glow-in-the-dark Stickers", "Heart-shaped Cookies", "Ribbon Gift Boxes"
         ];
 
         const pajamas = [
-            "Cloud Print Pajamas", "Starry Night Pajamas", "Pastel Flower Pajamas", "Moon and Stars Pajamas", "Soft Snowflake Pajamas", "Fairy Dust Pajamas", "Cozy Blanket Pajamas", "Rainbow Stripe Pajamas", "Butterflies and Stars Pajamas", "Lavender and Pink Pajamas",
-            "Whimsical Cloud Pajamas", "Dreamcatcher Pajamas", "Unicorn Pajamas", "Pink Candy Pajamas", "Dotted Pajamas", "Snow Bunny Pajamas", "Forest Dream Pajamas", "Star Glimmer Pajamas", "Cozy Cat Pajamas", "Winter Wonder Pajamas",
-            "Starry Lullaby Pajamas", "Moonlit Pajamas", "Soft Heart Pajamas", "Dreamy Kitten Pajamas", "Soft Cuddles Pajamas", "Dreamy Stripes Pajamas", "Whimsical Polka Dot Pajamas", "Fairy Wings Pajamas", "Sweet Pea Pajamas", "Moonlit Meadow Pajamas",
-            "Twinkling Star Pajamas", "Dreamy Bunny Pajamas", "Cloud Puffs Pajamas", "Cozy Bear Pajamas", "Twinkle Dream Pajamas", "Pink Sparkle Pajamas", "Rainbow Dream Pajamas", "Shiny Star Pajamas", "Pastel Hearts Pajamas", "Cosmo Pajamas",
-            "Crystal Glow Pajamas", "Blue Moon Pajamas", "Floating Butterfly Pajamas", "Sweet Peach Pajamas", "Winter Breeze Pajamas", "Ocean Breeze Pajamas", "Magic Feather Pajamas", "Lullaby Pajamas", "Cozy Fireplace Pajamas", "Snowfall Pajamas",
-            "Magical Garden Pajamas", "Soft Cloud Pajamas", "Glitter Pajamas", "Sleepy Bear Pajamas", "Cozy Night Pajamas", "Forest Sprinkles Pajamas", "Twinkling Lights Pajamas", "Feather Dreams Pajamas", "Sunlit Dreams Pajamas", "Lightly Lavender Pajamas",
-            "Pastel Butterflies Pajamas", "Soft Whiskers Pajamas", "Midnight Glow Pajamas", "Shimmering Stars Pajamas", "Cozy Pajama Dots", "Watercolor Stars Pajamas", "Baby Blue Pajamas", "Kitten Paw Pajamas", "Pink Galaxy Pajamas", "Fuzzy Stripe Pajamas",
-            "Dreaming Bunny Pajamas", "Golden Moon Pajamas", "Silky Cloud Pajamas", "Rose Petal Pajamas", "Twinkling Butterfly Pajamas", "Pink Snowflakes Pajamas", "Cozy Night Stars Pajamas", "Moonlit Waves Pajamas", "Dreamlike Bunny Pajamas", "Morning Dew Pajamas",
-            "Cozy Mornings Pajamas", "Plush Kitty Pajamas", "Soft Cloud Pajamas", "Rainbow Glow Pajamas", "Magical Princess Pajamas", "Fawn Spot Pajamas", "Peachy Sweet Pajamas", "Dream Blossom Pajamas", "Baby Pink Pajamas", "Soft Frost Pajamas",
-            "Cozy Bear Pajamas", "Lavender Sleep Pajamas", "Little Dreamer Pajamas", "Ice Cream Pajamas", "Dandelion Pajamas", "Butterfly Night Pajamas", "Star Gaze Pajamas", "Moon Glow Pajamas", "Cozy Little Star Pajamas", "Dreamy Fox Pajamas"
+            "Matching Star-Print Pajama Set", "Moon & Cloud Satin Pajamas", "Strawberry Milk Gingham Pajamas", "Pastel Polka-Dot Cotton Pajamas", "Tiny Heart Quilted Sleep Set", "Aurora Gradient Onesie", "Cloud Fleece Romper", "Constellation Knit Pajamas", "Lavender Ribbed Pajama Set", "Baby Blue Sleep Dress with Ruffles",
+            "Cream Sherpa Hoodie Pajamas", "Pink Bow-Tie Nightgown", "Sleepy Bear Graphic Tee + Pants", "Kawaii Cat Face Pajamas", "Pajama Overalls (Soft Flannel)", "Star Patchwork Pajamas", "Mint Ribbon Pajama Set", "Honeycomb Pattern Sleepwear", "Cozy Turtleneck Pajama Set", "Sailor Collar Nightdress",
+            "Puffy Sleeve Sleep Dress", "Pleated Babydoll Nightgown", "Classic Striped Pajamas", "Cloud-Trim Pajama Shorts Set", "Snowflake Fleece Set", "Bunny Ear Hood Onesie", "Penguin Cozy Suit", "Tiny Duck Print Pajamas", "Galaxy Velvet Pajamas", "Moonbeam Lace-Edge Nightgown",
+            "Pastel Checkerboard Pajamas", "Rainbow Piping Pajama Set", "Heart Pocket Pajamas", "Star Button-Up Pajamas", "Puffy Pom-Pom Pajamas", "Knit Cable Pajama Set", "Silk Sleep Robe + Slip Dress", "Satin Cami + Wide-Leg Pants", "Soft Thermal Pajamas", "Fluffy Collar Pajama Set",
+            "Lace Bib Nightdress", "Bow-Back Sleep Dress", "Teddy Fleece Two-Piece", "Constellation Capelet Robe", "Moon & Bunny Embroidered Pajamas", "Daisy Print Nightgown", "Sunflower Print Pajamas", "Mini Rosebud Pajama Set", "Watercolor Cloud Pajamas", "Starry Tulle Overlay Nightdress",
+            "Pom-Pom Hood Pajamas", "Sherpa Vest + Pajama Set", "Cozy Cardigan Sleep Set", "Hooded Blanket Pajamas", "Satin Pajamas with Pearl Buttons", "Polaroid Star Pattern Pajamas", "Glow Star Pajamas (Cute Print)", "Pastel Plaid Pajamas", "Velvet Ribbon Nightgown", "Cloud Pocket Onesie",
+            "Lemon Sorbet Pajama Set", "Blueberry Nightdress", "Peachy Pink Sleep Shorts Set", "Mint Chocolate Stripe Pajamas", "Caramel Beige Knit Set", "Marshmallow White Onesie", "Cotton Candy Ombre Pajamas", "Teacup Print Pajamas", "Candy Stripe Pajamas", "Bubble Tea Print Nightdress",
+            "Star Collar Pajamas", "Frill Hem Pajama Pants", "Ruffle Sleeve Pajama Top", "Bunny Tail Pajama Shorts", "Bear Paw Slipper Pajamas", "Puffy Skirt Nightdress", "Sailor Stripe Sleep Set", "Ribbon Suspenders Pajamas", "Velvet Pajama Jumpsuit", "Quilted Vest Pajamas",
+            "Lace Cuff Pajamas", "Heart-Quilted Nightgown", "Cotton Smock Nightdress", "Soft Denim-Look Pajama Set", "Oversized Sleep Tee + Leggings", "Fairy Tale Cape Pajamas", "Star Cape Onesie", "Floral Kimono Robe Sleepwear", "Pastel Pajama Dress with Apron", "Cozy Pajama Tunic Set",
+            "Mini Bow Print Pajamas", "Cloud Collar Nightgown", "Pink Satin Pajamas with Piping", "Mint Satin Pajamas with Piping", "Lilac Satin Pajamas with Piping", "Teddy Bear Sleep Romper", "Night Sky Hoodie Pajamas", "Galaxy Print Sleep Dress", "Moonlight Lace Slip Dress", "Matching Mother–Baby Embroidered Pajamas"
         ];
 
-        const places = [
-            "Cozy Cottage", "Starry Meadow", "Ocean Side Cottage", "Magic Forest Clearing", "Dreamy Bedroom", "Moonlit Garden", "Cloudland", "Quiet Night Beach", "Enchanted Forest", "Lullaby Meadow",
-            "Flower Field", "Dream Forest", "Butterfly Garden", "Floating Island", "Snowy Hills", "Ice Crystal Cave", "The Secret Garden", "Lakeside Retreat", "Cozy Treehouse", "Fairytale Castle",
-            "Starry Cliffside", "Cozy Tent Under the Stars", "Moonlit Pond", "Soft Sand Dunes", "Peaceful Park", "Sunset Garden", "Dreamy Boat on a River", "Cloudy Hills", "Twinkling Sky High Tower", "Heavenly Tree",
-            "Stargazing Balcony", "Secret Tea Room", "Snowy Mountain Cabin", "Winter Wonderland Forest", "Underwater Dreamland", "Quiet Mountain Lodge", "Magical Ocean Shore", "Snowflake Fields", "Quiet Garden Path", "Under the Willow Tree",
-            "Hidden Lake", "Crystal Clear Stream", "Moonlit Bridge", "Golden Sunset Meadow", "Cozy Coffee Shop", "Floating Cloud Castle", "Lavender Field at Sunset", "Forest Stream", "Seaside Village", "Dreamy Flower Shop",
-            "Old Library", "Floating Lantern Festival", "Snowy Bench in the Park", "Starlight Beach", "Waterfall Retreat", "Fairytale Bakery", "Secret Hidden Garden", "Midnight Meadow", "Warm Cottage by the Lake", "Whimsical Rooftop",
-            "Blue Skies High Hill", "Dreaming by the Fire Pit", "Mystic Temple", "Enchanted Boat Ride", "Wildflower Hills", "Pink Cloud Garden", "Mountain View", "Magical Marsh", "Dreamy Snowy Village", "Quiet Mountain Cliff",
-            "Golden Desert Oasis", "Floating Boat on the Lake", "Garden Path by Moonlight", "Soft Golden Sunset", "Fairy Tale Dreamland", "Cozy Pillow Mountain", "Seaside Tower", "Crystal Clear Waters", "Lush Oasis Garden", "Twilight Woods",
-            "Dreamy Ice Castle", "Silky Snow Land", "Magical Desert Night", "Calm River Dock", "Beach Side Palace", "Magical Frozen Lake", "Floating Lily Pond", "Quiet Hidden Room", "Ancient Castle Ruins", "Peaceful Wheat Field",
-            "Soft Rainy Balcony", "Coastal Lighthouse", "Summer Festival", "Romantic Garden Walk", "Under the Golden Tree", "Quiet Coastal Path", "Starry Night Camp", "Crystal Canyon", "Moonlit Vineyard", "Lavender Bed and Breakfast"
+        const locations = [
+            "Pastel Cloud Bedroom", "Moonlit Daisy Meadow", "Starry Rooftop Garden", "Candy Cloud Playground", "Aurora Balcony Lounge", "Tiny Teacup Cottage", "Snow Globe Town Square", "Lantern Jellyfish Lagoon", "Crystal Dewdrop Forest", "Cotton Candy Mountain Ridge",
+            "Whispering Willow Park", "Moonstone Beach", "Starlight Library Hall", "Dream Bakery Kitchen", "Lullaby Lighthouse Cliff", "Cozy Igloo Café", "Floating Island Orchard", "Secret Blanket Fort City", "Glowworm Tunnel", "Fairy Lantern Alley",
+            "Pastel Night Market Street", "Constellation Observatory Deck", "Rainbow Mist Waterfall", "Dream Train Sleeper Car", "Mini Carousel Courtyard", "Plush Toy Museum", "Star Map Attic Room", "Moon Rabbit Garden", "Cloudberry Farm", "Firefly Bridge",
+            "Cozy Riverboat Dock", "Candlelit Greenhouse", "Mushroom Cottage Grove", "Lavender Field Path", "Chamomile Tea Terrace", "Strawberry Moon Farmhouse", "Cozy Woodland Cabin", "Koi Pond Pavilion", "Paper Lantern Lake", "Night Blossom Hot Spring",
+            "Pastel Aquarium Tunnel", "Moonlit Coral Reef (Cute)", "Star Sand Dune", "Snowy Cookie Village", "Gingerbread Street", "Prism Crystal Cave", "Soft Fog Playground", "Dandelion Hilltop", "Dream Fountain Plaza", "Cloud Hammock Garden",
+            "Tiny Planet Café", "Rooftop Tent Camp", "Bedtime Cinema Lawn", "Wind Chime Balcony", "Bubble Bath Spa Room", "Music Box Workshop", "Origami Garden", "Ribbon Bridge Walkway", "Sparkle Rain Alley", "Moonbeam Pier",
+            "Cozy Book Nook Corner", "Plush Staircase Palace", "Starry Boat House", "Sky Lantern Festival Field", "Aurora Ice Rink (Pastel)", "Moonlight Picnic Hill", "Glow Crystal Mine", "Dream Quilt Studio", "Night Rainbow Tunnel", "Cloud Train Station",
+            "Strawberry Cream Café", "Marshmallow Campground", "Constellation Clocktower", "Moonstone Lighthouse Balcony", "Jellybean Rain Street", "Snowflake Pavilion", "Secret Garden Maze", "Pastel Playground Castle", "Floating Teapot House", "Cloud Cathedral",
+            "Sunflower Sleep Garden", "Twilight Blossom Bridge", "Milky Way Riverbank", "Starry Window Seat", "Cozy Hearth Room", "Dreamy Aquarium Atrium", "Candlewick Orchard", "Ribbon & Spool Circus Tent", "Sleepy Harbor Promenade", "Cherry Blossom Night Park",
+            "Moonlit Tulip Field", "Cozy Rainy Window Café", "Tiny Lighthouse Reading Room", "Bubble Dome Greenhouse", "Starry Mirror Hall", "Dream Post Office", "Warm Cocoa Alley", "Lullaby Chapel Garden", "Glitter Snow Rooftop", "The Softest Cloud Summit"
         ];
 
-        function randomize() {
-            document.getElementById('num1').value = Math.floor(Math.random() * 100) + 1;
-            document.getElementById('num2').value = Math.floor(Math.random() * 100) + 1;
-            document.getElementById('num3').value = Math.floor(Math.random() * 100) + 1;
-            document.getElementById('num4').value = Math.floor(Math.random() * 100) + 1;
+        // --- Logic ---
+        let locked = [false, false, false, false];
+
+        function toggleLock(index) {
+            locked[index - 1] = !locked[index - 1];
+            const btn = document.getElementById(`lock${index}`);
+            const box = document.getElementById(`box${index}`);
+            
+            if (locked[index - 1]) {
+                btn.innerText = "🔒";
+                box.classList.add("locked");
+            } else {
+                btn.innerText = "🔓";
+                box.classList.remove("locked");
+            }
         }
 
-        function generatePrompt() {
-            const n1 = parseInt(document.getElementById('num1').value);
-            const n2 = parseInt(document.getElementById('num2').value);
-            const n3 = parseInt(document.getElementById('num3').value);
-            const n4 = parseInt(document.getElementById('num4').value);
+        function randomize() {
+            for (let i = 1; i <= 4; i++) {
+                if (!locked[i - 1]) {
+                    const randomNum = Math.floor(Math.random() * 100) + 1;
+                    document.getElementById(`n${i}`).value = randomNum;
+                    updateLabel(i, randomNum);
+                }
+            }
+        }
 
-            if (!n1 || !n2 || !n3 || !n4 || n1 < 1 || n1 > 100 || n2 < 1 || n2 > 100 || n3 < 1 || n3 > 100 || n4 < 1 || n4 > 100) {
-                alert("กรุณาใส่เลข 1-100 ให้ครบทุกช่องครับ");
+        function updateLabel(index, num) {
+            let text = "...";
+            if (num >= 1 && num <= 100) {
+                if (index === 1) text = themes[num - 1];
+                if (index === 2) text = collabs[num - 1];
+                if (index === 3) text = pajamas[num - 1];
+                if (index === 4) text = locations[num - 1];
+            }
+            document.getElementById(`txt${index}`).innerText = text;
+        }
+
+        // Listen for manual input changes
+        [1, 2, 3, 4].forEach(i => {
+            document.getElementById(`n${i}`).addEventListener('input', (e) => {
+                updateLabel(i, parseInt(e.target.value));
+            });
+        });
+
+        function generate() {
+            const n1 = parseInt(document.getElementById('n1').value);
+            const n2 = parseInt(document.getElementById('n2').value);
+            const n3 = parseInt(document.getElementById('n3').value);
+            const n4 = parseInt(document.getElementById('n4').value);
+
+            if (!n1 || !n2 || !n3 || !n4 || [n1,n2,n3,n4].some(n => n < 1 || n > 100)) {
+                alert("กรุณากรอกตัวเลข 1-100 ให้ครบทุกช่องก่อนนะคะ 🌙");
                 return;
             }
 
             const theme = themes[n1 - 1];
             const collab = collabs[n2 - 1];
             const pajama = pajamas[n3 - 1];
-            const place = places[n4 - 1];
+            const place = locations[n4 - 1];
 
-            const result = `as ${theme} collab ${collab} with ${pajama} in ${place}`;
-            document.getElementById('result').innerText = result;
+            const txt = `as ${theme} collab ${collab} with ${pajama} in ${place}`;
+            document.getElementById('output').innerText = txt;
         }
 
         function copyText() {
-            const text = document.getElementById('result').innerText;
-            if (text.includes("ใส่ตัวเลข")) {
-                alert("กรุณากดสร้าง Prompt ก่อนครับ");
+            const text = document.getElementById('output').innerText;
+            if (text.includes("ผลลัพธ์")) {
+                alert("กดสร้างประโยคก่อนน้า ✨");
                 return;
             }
             navigator.clipboard.writeText(text).then(() => {
-                alert("คัดลอกเรียบร้อย! 📋");
+                alert("คัดลอกเรียบร้อยค่า! 💤");
             });
         }
     </script>
